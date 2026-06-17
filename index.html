@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalismo | Inicio</title>
+    <meta name="description" content="Una experiencia web minimalista y elegante.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <div class="cursor-outline" id="cursor-outline"></div>
+
+    <nav class="navbar">
+        <a href="#view-home" class="nav-link" style="text-decoration: none; display: flex; align-items: center;">
+            <img src="assets/logo_dark.svg" alt="Minimalist" class="logo-img" id="site-logo">
+        </a>
+        <ul class="nav-links">
+            <li><a href="#view-home" class="nav-link">Inicio</a></li>
+            <li><a href="#view-about" class="nav-link">Sobre Mí</a></li>
+            <li><a href="#view-work" class="nav-link">Trabajo</a></li>
+            <li><a href="#view-contact" class="nav-link">Contacto</a></li>
+            <li>
+                <button id="theme-toggle" class="theme-toggle" aria-label="Cambiar tema">
+                    <i data-lucide="moon" id="moon-icon" style="display: none;"></i>
+                    <i data-lucide="sun" id="sun-icon"></i>
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="views-container">
+        <div class="view active" id="view-home">
+            <main class="hero" id="home">
+                <div class="hero-content">
+                    <h1 class="fade-in">Menos es <span>Más</span>.</h1>
+                    <p class="fade-in delay-1">Diseño puro, funcionalidad clara y estética refinada.</p>
+                    <a href="#view-work" class="btn fade-in delay-2 nav-link">Descubrir</a>
+                </div>
+            </main>
+
+            <!-- Resumen Servicios -->
+            <section class="section">
+                <div class="section-content">
+                    <h2 class="fade-in">Lo que hacemos</h2>
+                    <p class="fade-in delay-1">Soluciones integrales para potenciar tu marca en el entorno digital.</p>
+                    <div class="services-grid fade-in delay-2">
+                        <div class="service-card">
+                            <i data-lucide="pen-tool"></i>
+                            <h3>Branding & Diseño</h3>
+                        </div>
+                        <div class="service-card">
+                            <i data-lucide="video"></i>
+                            <h3>Audiovisual</h3>
+                        </div>
+                        <div class="service-card">
+                            <i data-lucide="trending-up"></i>
+                            <h3>Marketing</h3>
+                        </div>
+                        <div class="service-card">
+                            <i data-lucide="smartphone"></i>
+                            <h3>Redes Sociales</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Carrusel Clientes y Footer combinados -->
+            <section class="section combined-section" style="justify-content: space-between; padding-bottom: 2rem;">
+                <div class="spacer" style="flex: 1;"></div> <!-- Spacer superior para centrar el carrusel un poco más -->
+                
+                <div class="section-content" style="max-width: 100%; width: 100%;">
+                    <h2 class="fade-in">Nuestros Clientes</h2>
+                    <div class="carousel-container fade-in delay-1">
+                        <div class="carousel-track">
+                            <!-- Logos originales -->
+                            <div class="client-logo">TechNova</div>
+                            <div class="client-logo">Studio Zeta</div>
+                            <div class="client-logo">GlobalCorp</div>
+                            <div class="client-logo">AquaLife</div>
+                            <div class="client-logo">UrbanSpaces</div>
+                            <!-- Logos duplicados para scroll infinito -->
+                            <div class="client-logo">TechNova</div>
+                            <div class="client-logo">Studio Zeta</div>
+                            <div class="client-logo">GlobalCorp</div>
+                            <div class="client-logo">AquaLife</div>
+                            <div class="client-logo">UrbanSpaces</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="spacer" style="flex: 1;"></div> <!-- Spacer inferior -->
+
+                <!-- Footer -->
+                <div class="footer-bottom fade-in delay-2" style="width: 100%; border-top: 1px solid var(--border-color); padding-top: 2rem; margin-top: auto;">
+                    <h2 style="font-size: 2rem; margin-bottom: 1rem;">Hablemos</h2>
+                    <div class="footer-grid">
+                        <div class="footer-block">
+                            <h3>Ubicación</h3>
+                            <p>Av. Principal 1234<br>Distrito Creativo<br>Ciudad, CP 54321</p>
+                        </div>
+                        <div class="footer-block">
+                            <h3>Contacto</h3>
+                            <p>hola@agenciaminimal.com<br>proyectos@agenciaminimal.com<br>+1 (555) 123-4567</p>
+                        </div>
+                        <div class="footer-block">
+                            <h3>Síguenos</h3>
+                            <div class="social-links">
+                                <a href="#" aria-label="Instagram"><i data-lucide="instagram"></i></a>
+                                <a href="#" aria-label="Twitter"><i data-lucide="twitter"></i></a>
+                                <a href="#" aria-label="Linkedin"><i data-lucide="linkedin"></i></a>
+                                <a href="#" aria-label="Facebook"><i data-lucide="facebook"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <div class="view" id="view-about">
+            <section id="about" class="section about">
+                <div class="section-content">
+                    <h2 class="fade-in">Sobre Mí</h2>
+                    <p class="fade-in">Soy un diseñador minimalista enfocado en crear experiencias digitales fluidas y sin distracciones. Creo en el poder de la simplicidad para resolver problemas complejos y elevar el estándar de la web.</p>
+                </div>
+            </section>
+        </div>
+
+        <div class="view" id="view-work">
+            <!-- Introducción -->
+            <section id="work" class="section work">
+                <div class="section-content">
+                    <h2 class="fade-in">Nuestro Trabajo</h2>
+                    <p class="fade-in delay-1">Nos apasiona dar vida a las marcas a través de estrategias creativas. Selecciona un área para conocer más:</p>
+                    
+                    <div class="services-grid fade-in delay-2" style="max-width: 1000px;">
+                        <div class="service-card scroll-trigger" data-target-index="1" style="cursor: pointer;">
+                            <i data-lucide="pen-tool"></i>
+                            <h3>Branding</h3>
+                        </div>
+                        <div class="service-card scroll-trigger" data-target-index="2" style="cursor: pointer;">
+                            <i data-lucide="trending-up"></i>
+                            <h3>Marketing</h3>
+                        </div>
+                        <div class="service-card scroll-trigger" data-target-index="3" style="cursor: pointer;">
+                            <i data-lucide="camera"></i>
+                            <h3>Audiovisual</h3>
+                        </div>
+                        <div class="service-card scroll-trigger" data-target-index="4" style="cursor: pointer;">
+                            <i data-lucide="users"></i>
+                            <h3>Redes Sociales</h3>
+                        </div>
+                        <div class="service-card scroll-trigger" data-target-index="5" style="cursor: pointer;">
+                            <i data-lucide="video"></i>
+                            <h3>Videos Corporativos</h3>
+                        </div>
+                        <div class="service-card scroll-trigger" data-target-index="6" style="cursor: pointer;">
+                            <i data-lucide="layout"></i>
+                            <h3>Diseño Gráfico</h3>
+                        </div>
+                        <div class="service-card scroll-trigger" data-target-index="7" style="cursor: pointer;">
+                            <i data-lucide="utensils"></i>
+                            <h3>Fotografía Gastronómica</h3>
+                        </div>
+                        <div class="service-card scroll-trigger" data-target-index="8" style="cursor: pointer;">
+                            <i data-lucide="package"></i>
+                            <h3>Fotografía de Producto</h3>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Branding -->
+            <section class="section">
+                <div class="section-content">
+                    <h2 class="fade-in">Branding</h2>
+                    <p class="fade-in">Construimos la esencia de tu marca desde cero. Definimos tu voz, tus valores y creamos una identidad sólida que resuene con tu audiencia y te diferencie en el mercado.</p>
+                </div>
+            </section>
+
+            <!-- Marketing -->
+            <section class="section">
+                <div class="section-content">
+                    <h2 class="fade-in">Marketing</h2>
+                    <p class="fade-in">Estrategias basadas en datos y creatividad. Diseñamos campañas enfocadas en alcanzar tus objetivos de negocio, maximizando el impacto y el retorno de inversión.</p>
+                </div>
+            </section>
+
+            <!-- Contenido Audiovisual -->
+            <section class="section">
+                <div class="section-content">
+                    <h2 class="fade-in">Contenido Audiovisual</h2>
+                    <p class="fade-in">Contamos historias que capturan la atención. Producimos fotografías y videos de alta calidad adaptados a las narrativas modernas y a los formatos digitales de hoy.</p>
+                </div>
+            </section>
+
+            <!-- Community Management -->
+            <section class="section">
+                <div class="section-content">
+                    <h2 class="fade-in">Manejo de Redes Sociales</h2>
+                    <p class="fade-in">Cultivamos tu comunidad online. Gestionamos tus redes sociales interactuando con tu audiencia, creando contenido de valor y construyendo relaciones de confianza a largo plazo.</p>
+                </div>
+            </section>
+
+            <!-- Videos Corporativos -->
+            <section class="section">
+                <div class="section-content">
+                    <h2 class="fade-in">Videos Corporativos</h2>
+                    <p class="fade-in">Transmitimos profesionalismo e innovación. Realizamos videos institucionales que reflejan la misión, visión y cultura de tu empresa para conectar con clientes e inversores.</p>
+                </div>
+            </section>
+
+            <!-- Diseño Gráfico -->
+            <section class="section">
+                <div class="section-content">
+                    <h2 class="fade-in">Diseño Gráfico</h2>
+                    <p class="fade-in">Estética minimalista y funcional. Creamos piezas visuales únicas, desde creatividades para web y redes hasta identidad visual, asegurando una comunicación coherente.</p>
+                </div>
+            </section>
+
+            <!-- Fotografía Gastronómica -->
+            <section class="section">
+                <div class="section-content">
+                    <h2 class="fade-in">Fotografía Gastronómica</h2>
+                    <p class="fade-in">Hacemos que tus platos luzcan irresistibles. Capturamos la textura, el color y la esencia de tus creaciones culinarias para despertar el apetito de tus clientes a través de la pantalla.</p>
+                </div>
+            </section>
+
+            <!-- Fotografía de Producto -->
+            <section class="section">
+                <div class="section-content">
+                    <h2 class="fade-in">Fotografía de Producto</h2>
+                    <p class="fade-in">Resaltamos cada detalle. Iluminación precisa y composición cuidada para crear imágenes de producto que transmiten calidad, impulsan las ventas y fortalecen el valor de tu marca.</p>
+                </div>
+            </section>
+        </div>
+
+        <div class="view" id="view-contact">
+            <main class="section" id="contact" style="padding-top: 12rem;">
+                <div class="section-content fade-in">
+                    <h2>Hablemos.</h2>
+                    <p>¿Tienes un proyecto en mente? Escríbeme y hagamos que suceda.</p>
+                    
+                    <div class="contact-container">
+                        <form action="#" method="POST" id="contactForm">
+                            <div class="form-group">
+                                <label for="name">Nombre</label>
+                                <input type="text" id="name" name="name" class="form-control" required placeholder="Tu nombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" name="email" class="form-control" required placeholder="tu@email.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="message">Mensaje</label>
+                                <textarea id="message" name="message" class="form-control" required placeholder="¿En qué puedo ayudarte?"></textarea>
+                            </div>
+                            <button type="submit" class="btn">Enviar Mensaje</button>
+                        </form>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Navegación por puntos laterales -->
+    <div class="dot-navigation" id="dot-navigation"></div>
+
+    <!-- Botón volver arriba -->
+    <button class="back-to-top" id="back-to-top" aria-label="Volver arriba">
+        <i data-lucide="chevron-up"></i>
+    </button>
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
