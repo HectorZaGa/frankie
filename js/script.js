@@ -56,6 +56,29 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Sidebar Hamburger Menu Logic
+    const menuToggleBtn = document.getElementById('menu-toggle');
+    const navLinksContainer = document.querySelector('.nav-links');
+
+    if (menuToggleBtn && navLinksContainer) {
+        menuToggleBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navLinksContainer.classList.toggle('open');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (navLinksContainer.classList.contains('open') && !navLinksContainer.contains(e.target) && !menuToggleBtn.contains(e.target)) {
+                navLinksContainer.classList.remove('open');
+            }
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinksContainer.classList.remove('open');
+            });
+        });
+    }
+
     // Navbar Scroll Animation
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
@@ -99,35 +122,28 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Función de easing (suavizado y aceleración)
     const easeInOutCubic = (t) => t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
+    let snapAnimationId;
+    let isAnimatingSnap = false;
+    let isUserScrolling = false;
 
-    const scrollToSection = (index) => {
-        if (index < 0 || index >= sections.length) return;
-        isAnimating = true;
-        currentSectionIndex = index;
-
-        // Actualizar puntos
-        if (dotNavigation) {
-            dotNavigation.querySelectorAll('.dot-nav-item').forEach((dot, i) => {
-                if (i === index) dot.classList.add('active');
-                else dot.classList.remove('active');
-            });
-        }
-
-        // Actualizar botón volver arriba
-        if (backToTopBtn) {
-            if (index > 0) backToTopBtn.classList.add('visible');
-            else backToTopBtn.classList.remove('visible');
-        }
-
-        const targetPosition = sections[index].offsetTop;
-        const startPosition = window.pageYOffset;
+    const smoothScrollTo = (targetPosition, duration = 1200) => {
+        cancelAnimationFrame(snapAnimationId);
+        isAnimatingSnap = true;
+        const startPosition = window.scrollY;
         const distance = targetPosition - startPosition;
-        const duration = 1200; // 1.2 segundos para que la animación sea muy notoria
         let start = null;
 
-        window.requestAnimationFrame(function step(timestamp) {
+        if (Math.abs(distance) < 5) {
+            isAnimatingSnap = false;
+            return;
+        }
+
+        const step = (timestamp) => {
+            if (isUserScrolling) {
+                isAnimatingSnap = false;
+                return;
+            }
             if (!start) start = timestamp;
             const progress = timestamp - start;
             const percent = Math.min(progress / duration, 1);
@@ -135,12 +151,49 @@ document.addEventListener("DOMContentLoaded", () => {
             window.scrollTo(0, startPosition + distance * easeInOutCubic(percent));
 
             if (progress < duration) {
-                window.requestAnimationFrame(step);
+                snapAnimationId = window.requestAnimationFrame(step);
             } else {
-                setTimeout(() => { isAnimating = false; }, 200); 
+                window.scrollTo(0, targetPosition);
+                setTimeout(() => { isAnimatingSnap = false; }, 50);
+            }
+        };
+        snapAnimationId = window.requestAnimationFrame(step);
+    };
+
+    const scrollToSection = (index) => {
+        if (index < 0 || index >= sections.length) return;
+        smoothScrollTo(sections[index].offsetTop, 1000); // Suave para botones
+    };
+
+    // Intersection Observer para rastrear en qué sección estamos
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.5
+    };
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const index = sections.indexOf(entry.target);
+                if (index !== -1) {
+                    currentSectionIndex = index;
+                    
+                    if (dotNavigation) {
+                        dotNavigation.querySelectorAll('.dot-nav-item').forEach((dot, i) => {
+                            if (i === index) dot.classList.add('active');
+                            else dot.classList.remove('active');
+                        });
+                    }
+
+                    if (backToTopBtn) {
+                        if (index > 0) backToTopBtn.classList.add('visible');
+                        else backToTopBtn.classList.remove('visible');
+                    }
+                }
             }
         });
-    };
+    }, observerOptions);
 
     function updateActiveView(viewId) {
         // Ocultar todas las vistas
@@ -160,9 +213,21 @@ document.addEventListener("DOMContentLoaded", () => {
         void targetView.offsetWidth; // Trigger reflow
         targetView.style.animation = null;
 
+        const viewNames = {
+            'view-home': 'Inicio',
+            'view-about': 'Sobre Mí',
+            'view-work': 'Trabajo',
+            'view-contact': 'Contacto'
+        };
+        document.title = `Frankie | ${viewNames[viewId] || 'Inicio'}`;
+
         // Recalcular secciones para la vista activa
         sections = Array.from(document.querySelectorAll('.view.active .hero, .view.active .section'));
         currentSectionIndex = 0;
+
+        // Reconectar Observer
+        sectionObserver.disconnect();
+        sections.forEach(sec => sectionObserver.observe(sec));
 
         // Generar puntos de navegación
         if (dotNavigation) {
@@ -225,46 +290,43 @@ document.addEventListener("DOMContentLoaded", () => {
     const initialHash = window.location.hash.substring(1) || 'view-home';
     updateActiveView(initialHash);
 
-    // Eventos de Scroll
-    window.addEventListener('wheel', (e) => {
-        if (sections.length <= 1) return; // Permitir scroll normal si solo hay 1 sección
-        e.preventDefault(); 
-        if (isAnimating) return;
-
-        if (e.deltaY > 0) {
-            scrollToSection(currentSectionIndex + 1); // Bajar
-        } else if (e.deltaY < 0) {
-            scrollToSection(currentSectionIndex - 1); // Subir
-        }
-    }, { passive: false });
-
-    // Soporte para táctil
-    let touchStartY = 0;
-    window.addEventListener('touchstart', (e) => {
-        touchStartY = e.touches[0].clientY;
-    }, { passive: false });
-
-    window.addEventListener('touchmove', (e) => {
-        if (sections.length <= 1) return;
-        e.preventDefault(); 
-        if (isAnimating) return;
-        
-        const touchEndY = e.touches[0].clientY;
-        const deltaY = touchStartY - touchEndY;
-
-        if (Math.abs(deltaY) > 40) { // Umbral de sensibilidad
-            if (deltaY > 0) {
-                scrollToSection(currentSectionIndex + 1);
-            } else {
-                scrollToSection(currentSectionIndex - 1);
-            }
-        }
-    }, { passive: false });
+    // Motor de Soft Snap Customizado
+    let snapTimeout;
     
-    // Ajustar scroll en resize
-    window.addEventListener('resize', () => {
-        if (sections.length > 0) {
-            scrollToSection(currentSectionIndex);
+    const stopAnimationOnInput = () => {
+        if (isAnimatingSnap) {
+            isUserScrolling = true;
+            cancelAnimationFrame(snapAnimationId);
+            isAnimatingSnap = false;
         }
-    });
+    };
+
+    window.addEventListener('wheel', stopAnimationOnInput, { passive: true });
+    window.addEventListener('touchstart', stopAnimationOnInput, { passive: true });
+
+    window.addEventListener('scroll', () => {
+        if (isAnimatingSnap) return; // Ignorar scroll programático
+        
+        isUserScrolling = false; // El usuario paró de generar input
+
+        clearTimeout(snapTimeout);
+        snapTimeout = setTimeout(() => {
+            if (sections.length <= 1) return;
+            
+            let closestIndex = 0;
+            let minDistance = Infinity;
+            const scrollY = window.scrollY;
+
+            sections.forEach((sec, i) => {
+                const distance = Math.abs(sec.offsetTop - scrollY);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestIndex = i;
+                }
+            });
+
+            // Auto centrar suavemente a la sección más cercana
+            smoothScrollTo(sections[closestIndex].offsetTop, 800);
+        }, 150); // Tiempo de espera tras detener el scroll
+    }, { passive: true });
 });
