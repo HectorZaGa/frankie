@@ -56,29 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Sidebar Hamburger Menu Logic
-    const menuToggleBtn = document.getElementById('menu-toggle');
-    const navLinksContainer = document.querySelector('.nav-links');
-
-    if (menuToggleBtn && navLinksContainer) {
-        menuToggleBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            navLinksContainer.classList.toggle('open');
-        });
-
-        document.addEventListener('click', (e) => {
-            if (navLinksContainer.classList.contains('open') && !navLinksContainer.contains(e.target) && !menuToggleBtn.contains(e.target)) {
-                navLinksContainer.classList.remove('open');
-            }
-        });
-
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', () => {
-                navLinksContainer.classList.remove('open');
-            });
-        });
-    }
-
     // Navbar Scroll Animation
     window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
